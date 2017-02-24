@@ -1,18 +1,24 @@
 #!/bin/bash
 i=0
-nmcli -m multiline connection | grep UUID >nmcli_out
-cat nmcli_out
-
-while read  n u  ; do
+grep -i keinpasswort * -H > nm_ids
+cat nm_ids
+nmcli -f uuid connection > nmcli_out
+#cat nmcli_out
+static_connection="ff1d4bde-051c-408b-82dd-664190747d04"
+while read  n   ; do
 	name[$i]=$n
-	uuid[$i]=$u
 	i=`expr $i + 1`
-done < nmcli_out
+done < nm_ids
 
-lenuuid=${#uuid[@]}
-count=0
-while [ $count -lt $lenuuid ]; do
-	echo ${uuid[$count]}
-	echo nmcli connection delete uuid ${uuid[$count]}
+lenname=${#name[@]}
+count=1
+while [ $count -lt $lenname ]; do
+	echo ${name[$count]}
+	if [ "${name[$count],,}" != "${static_connection}" ] 
+	then
+		echo nmcli connection delete  ${name[$count]}
+	else 
+		echo "static-Connection found. Nothing to delete" ${name[$count]}
+	fi
 	let count=count+1
 done
