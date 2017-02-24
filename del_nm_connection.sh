@@ -1,6 +1,6 @@
 #!/bin/bash
 i=0
-grep -i keinpasswort * -H > nm_ids
+grep -i keinpasswort * -H | xargs -n 1 > nm_ids
 cat nm_ids
 nmcli -f uuid connection > nmcli_out
 #cat nmcli_out
