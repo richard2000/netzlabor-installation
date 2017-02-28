@@ -22,3 +22,7 @@ while [ $count -lt $lenname ]; do
 	fi
 	let count=count+1
 done
+
+
+# funktioniert noch nicht richtig ohne echo
+grep -l keinpasswort /etc/NetworkManager/system-connections/* | grep -Po "[^/]*$" | xargs -0 echo nmcli connection delete id
