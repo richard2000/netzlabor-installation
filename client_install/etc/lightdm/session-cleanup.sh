@@ -29,7 +29,14 @@ loeschen (){
   cd /home/.keinpasswort_rw && find . -maxdepth 1 -mindepth 1 $no_aufs $zusatz -print0|xargs -0 rm -rf
   mount /home/keinpasswort
 
+ # NetworkManager Connections schützen
+ fuser -k -m /etc/NetworkManager/system-connections
+ umount /etc/NetworkManager/system-connections
+ cd /home/.NetworkManager_rw && find . -maxdepth 1 -mindepth 1 $no_nmaufs $zusatz -print0|xargs -0 rm -rf
+ mount /etc/NetworkManager/system-connections
+ nmcli connection reload
 }
+
 # Inhalt von .keinpasswort_rw beim Login löschen. Das .pulse-Verzeichnis muss stehen
 # bleiben, da es sonst bei direkter Neuanmeldung zu Sound-Problemen kommen kann.
 loeschen "! -name .pulse"
