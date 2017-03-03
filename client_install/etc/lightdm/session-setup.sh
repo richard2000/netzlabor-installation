@@ -30,10 +30,9 @@ loeschen (){
   mount /home/keinpasswort
   
   # NetworkManager Connections schützen
-  fuser -k -m /etc/NetworkManager/system-connections
-  umount /etc/NetworkManager/system-connections
-  cd /home/.NetworkManager_rw && find . -maxdepth 1 -mindepth 1 $no_nmaufs $zusatz -print0|xargs -0 rm -rf
-  mount /etc/NetworkManager/system-connections
+#  grep -l keinpasswort /etc/NetworkManager/system-connections/* | grep -Po "[^/]*$" | xargs -I{} echo nmcli connection delete id "{}" | sh 
+  rm /etc/NetworkManager/system-connections/*
+  cp /etc/NetworkManager/connections_backup/* /etc/NetworkManager/system-connections/
   nmcli connection reload
 }
 
