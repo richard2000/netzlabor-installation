@@ -26,3 +26,5 @@ done
 
 # funktioniert noch nicht richtig ohne echo
 grep -l keinpasswort /etc/NetworkManager/system-connections/* | grep -Po "[^/]*$" | xargs -0 echo nmcli connection delete id
+
+# Test
